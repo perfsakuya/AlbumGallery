@@ -2,7 +2,7 @@
 //  Album+CoreDataProperties.m
 //  AlbumGallery
 //
-//  Created by 汤骏哲 on 2024/11/20.
+//  Created by 汤骏哲 on 2024/11/22.
 //
 //
 
@@ -14,10 +14,12 @@
 	return [NSFetchRequest fetchRequestWithEntityName:@"Album"];
 }
 
-@dynamic name;
-@dynamic composer;
-@dynamic genre;
+@dynamic artist;
 @dynamic coverImage;
-@dynamic songs;
+@dynamic genre;
+@dynamic id;
+@dynamic releaseDate;
+@dynamic title;
+@dynamic trackCount;
 
 @end

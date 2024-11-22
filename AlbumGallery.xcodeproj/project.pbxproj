@@ -6,13 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		52FB949A2CEE375E0013E3DA /* Song+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FB94992CEE375E0013E3DA /* Song+CoreDataProperties.m */; };
-		52FB949B2CEE375E0013E3DA /* Song+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FB94972CEE375E0013E3DA /* Song+CoreDataClass.m */; };
-		52FB94A02CEE38750013E3DA /* Album+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FB949D2CEE38750013E3DA /* Album+CoreDataClass.m */; };
-		52FB94A12CEE38750013E3DA /* Album+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FB949F2CEE38750013E3DA /* Album+CoreDataProperties.m */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		52FB943A2CEE2B9F0013E3DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -35,14 +28,6 @@
 		52FB941B2CEE2B9D0013E3DA /* AlbumGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlbumGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52FB94392CEE2B9F0013E3DA /* AlbumGalleryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlbumGalleryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52FB94432CEE2B9F0013E3DA /* AlbumGalleryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlbumGalleryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		52FB94962CEE375E0013E3DA /* Song+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Song+CoreDataClass.h"; sourceTree = "<group>"; };
-		52FB94972CEE375E0013E3DA /* Song+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Song+CoreDataClass.m"; sourceTree = "<group>"; };
-		52FB94982CEE375E0013E3DA /* Song+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Song+CoreDataProperties.h"; sourceTree = "<group>"; };
-		52FB94992CEE375E0013E3DA /* Song+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Song+CoreDataProperties.m"; sourceTree = "<group>"; };
-		52FB949C2CEE38750013E3DA /* Album+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Album+CoreDataClass.h"; sourceTree = "<group>"; };
-		52FB949D2CEE38750013E3DA /* Album+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Album+CoreDataClass.m"; sourceTree = "<group>"; };
-		52FB949E2CEE38750013E3DA /* Album+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Album+CoreDataProperties.h"; sourceTree = "<group>"; };
-		52FB949F2CEE38750013E3DA /* Album+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Album+CoreDataProperties.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -118,14 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				52FB951C2CEE48DF0013E3DA /* Images */,
-				52FB949C2CEE38750013E3DA /* Album+CoreDataClass.h */,
-				52FB949D2CEE38750013E3DA /* Album+CoreDataClass.m */,
-				52FB949E2CEE38750013E3DA /* Album+CoreDataProperties.h */,
-				52FB949F2CEE38750013E3DA /* Album+CoreDataProperties.m */,
-				52FB94962CEE375E0013E3DA /* Song+CoreDataClass.h */,
-				52FB94972CEE375E0013E3DA /* Song+CoreDataClass.m */,
-				52FB94982CEE375E0013E3DA /* Song+CoreDataProperties.h */,
-				52FB94992CEE375E0013E3DA /* Song+CoreDataProperties.m */,
 				52FB94F22CEE437C0013E3DA /* AlbumGallery */,
 				52FB943C2CEE2B9F0013E3DA /* AlbumGalleryTests */,
 				52FB94462CEE2B9F0013E3DA /* AlbumGalleryUITests */,
@@ -288,10 +265,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52FB94A02CEE38750013E3DA /* Album+CoreDataClass.m in Sources */,
-				52FB94A12CEE38750013E3DA /* Album+CoreDataProperties.m in Sources */,
-				52FB949A2CEE375E0013E3DA /* Song+CoreDataProperties.m in Sources */,
-				52FB949B2CEE375E0013E3DA /* Song+CoreDataClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

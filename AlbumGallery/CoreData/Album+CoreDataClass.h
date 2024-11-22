@@ -2,14 +2,12 @@
 //  Album+CoreDataClass.h
 //  AlbumGallery
 //
-//  Created by 汤骏哲 on 2024/11/20.
+//  Created by 汤骏哲 on 2024/11/22.
 //
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
-@class Song;
 
 NS_ASSUME_NONNULL_BEGIN
 

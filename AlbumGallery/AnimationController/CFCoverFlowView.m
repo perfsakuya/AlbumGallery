@@ -423,6 +423,7 @@
 
 #pragma mark - Animation
 
+// TODO: 这里为回中函数，可能可以在这里修复误差
 - (void)animateToCenter {
     // find the center offset
     CGFloat distance = ((long)((UIView *)self.views[0]).layer.transform.m41) % ((long)_pageItemSpace);
@@ -430,6 +431,7 @@
     if (distance > _pageItemSpace / 2.0) {
         distance -= _pageItemSpace;
     }
+//    NSLog(@"[animateToCenter]Distance: %f", distance);
 
     [self animationWithDistance:distance duration:0.2];
 }
@@ -519,7 +521,7 @@
         
         position = [self fixPosition:position];
         
-        NSLog(@"Item %ld, Raw Position: %f, Adjusted Position: %f", (long)i, item.layer.transform.m41, position);
+        // NSLog(@"Item %ld, Raw Position: %f, Adjusted Position: %f", (long)i, item.layer.transform.m41, position);
 
         item.layer.transform = [self transformForPosition:position];
     }
@@ -564,6 +566,7 @@
     }
 }
 
+// TODO: 在这里同步更新专辑信息
 - (void)respondsToDidScrollPageToIndex {
     static NSInteger lastScrollIndex = 0;
     NSInteger currentScrollIndex = 0;
@@ -644,7 +647,6 @@
     return CGSizeMake(position - _pageItemSpace * 1.5 - _shadowRadius * 2.0, 0);
 }
 
-// FIXME: 3D变换参数
 // FIXME: FIX02
 //- (CATransform3D)transformForPosition:(CGFloat)position {
 //    // 计算平移变换
@@ -668,7 +670,7 @@
     CGFloat angle = -(M_PI * (ratio * 60.0) / 180.0);
 
     // 打印调试信息
-    NSLog(@"Transform for position %f: angle %f", position, angle);
+    // NSLog(@"Transform for position %f: angle %f", position, angle);
 
     CATransform3D translationTransform = CATransform3DMakeTranslation(position, 0.0, fabs(ratio) * -200.0);
     CATransform3D transform = CATransform3DRotate(translationTransform, angle, 0, 1, 0);

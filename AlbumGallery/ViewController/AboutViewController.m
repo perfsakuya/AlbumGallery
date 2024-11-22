@@ -45,9 +45,9 @@
     appIcon.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
         [appIcon.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [appIcon.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20],
-        [appIcon.widthAnchor constraintEqualToConstant:100],
-        [appIcon.heightAnchor constraintEqualToConstant:100]
+        [appIcon.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:60],
+        [appIcon.widthAnchor constraintEqualToConstant:150],
+        [appIcon.heightAnchor constraintEqualToConstant:150]
     ]];
     
     // 添加应用名称
@@ -64,9 +64,9 @@
     
     // 添加版本信息
     UILabel *versionLabel = [[UILabel alloc] init];
-    versionLabel.text = @"Version 0.0.1";
-    versionLabel.font = [UIFont systemFontOfSize:14];
-    versionLabel.textColor = [UIColor secondaryLabelColor];
+    versionLabel.text = @"Demo 0.0.1";
+    versionLabel.font = [UIFont systemFontOfSize:16];
+    versionLabel.textColor = [UIColor colorWithRed: 0.54 green: 0.54 blue: 0.56 alpha: 1.00];
     versionLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:versionLabel];
     versionLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -78,7 +78,7 @@
     // 添加开发者信息
     UILabel *developerLabel = [[UILabel alloc] init];
     developerLabel.text = @"Developed by PerfSakuya with ♥.";
-    developerLabel.font = [UIFont systemFontOfSize:16];
+    developerLabel.font = [UIFont systemFontOfSize:20];
     developerLabel.textColor = [UIColor labelColor];
     developerLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:developerLabel];
@@ -86,6 +86,18 @@
     [NSLayoutConstraint activateConstraints:@[
         [developerLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
         [developerLabel.topAnchor constraintEqualToAnchor:versionLabel.bottomAnchor constant:20]
+    ]];
+    
+    // 添加联系按钮
+    UIButton *contactButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [contactButton setTitle:@"My Blog" forState:UIControlStateNormal];
+    [contactButton addTarget:self action:@selector(contactUs) forControlEvents:UIControlEventTouchUpInside];
+    contactButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    [self.view addSubview:contactButton];
+    contactButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:@[
+        [contactButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+        [contactButton.topAnchor constraintEqualToAnchor:developerLabel.bottomAnchor constant:10]
     ]];
     
     // 添加版权信息
@@ -101,16 +113,6 @@
         [copyrightLabel.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-20]
     ]];
     
-    // 添加联系按钮
-    UIButton *contactButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [contactButton setTitle:@"My Blog" forState:UIControlStateNormal];
-    [contactButton addTarget:self action:@selector(contactUs) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:contactButton];
-    contactButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:@[
-        [contactButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-        [contactButton.topAnchor constraintEqualToAnchor:developerLabel.bottomAnchor constant:30]
-    ]];
 }
 
 // 联系按钮的功能
