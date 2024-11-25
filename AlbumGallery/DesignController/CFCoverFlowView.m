@@ -175,12 +175,11 @@
 
         [self addMirrorEffectForItem:imageView];
 
-        // 添加手势
-        // 暂时不启用
-        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressHandler:)];
-        longPressGesture.minimumPressDuration = 0.05;
-        longPressGesture.cancelsTouchesInView = NO;
-        [imageView addGestureRecognizer:longPressGesture];
+        // 长按动作，暂时不启用
+//        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressHandler:)];
+//        longPressGesture.minimumPressDuration = 0.05;
+//        longPressGesture.cancelsTouchesInView = NO;
+//        [imageView addGestureRecognizer:longPressGesture];
 
         [self addSubview:imageView];
 

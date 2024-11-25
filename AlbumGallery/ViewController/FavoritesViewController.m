@@ -12,8 +12,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.view.backgroundColor = [UIColor systemGrayColor];
-    self.title = @"Favorites";
+    self.view.backgroundColor = [UIColor whiteColor];
 
     // 添加演示标签
     UILabel *label = [[UILabel alloc] initWithFrame:self.view.bounds];

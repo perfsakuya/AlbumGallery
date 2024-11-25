@@ -8,31 +8,29 @@
 #import "CFCoverFlowView.h"
 #import "MusicLibraryManager.h"
 #import "AlbumLocalization.h"
+#import "AlbumShareViewController.h"
 @interface CoverFlowViewController () <CFCoverFlowViewDelegate>
 
 @property (nonatomic, strong) NSArray<NSDictionary *> *albumDataArray;
 @property (nonatomic, strong) UILabel *albumTitleLabel;
 @property (nonatomic, strong) UILabel *albumArtistLabel;
 @property (nonatomic, strong) UILabel *albumGenreAndReleaseDateLabel;
-
+//@property (nonatomic, assign) NSInteger currentAlbumIndex;
 @end
 
 @implementation CoverFlowViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Cover Flow";
     self.view.backgroundColor = [UIColor whiteColor];
     
 #pragma mark - Cover Flow Area
-    
-// 创建 Cover Flow 视图
+
     CFCoverFlowView *coverFlowView = [[CFCoverFlowView alloc] initWithFrame:CGRectMake(0, 75, self.view.bounds.size.width, self.view.bounds.size.height / 3)];
     
     coverFlowView.pageItemWidth = coverFlowView.bounds.size.height / 1.35;
     coverFlowView.pageItemHeight = coverFlowView.bounds.size.height / 1.35;
     coverFlowView.pageItemCoverWidth = 30.0;
-//    coverFlowView.backgroundColor = [UIColor clearColor]; // 确保背景透明
     [self.view addSubview:coverFlowView];
 
     coverFlowView.delegate = self;
@@ -57,7 +55,6 @@
                 NSLog(@"专辑 %@ 没有封面图片，使用默认图片", album[@"title"]);
                 UIImage *defaultImage = [UIImage imageNamed:@"NO_DATA"];
                 [coverImages addObject:defaultImage];
-
             }
         }
 
@@ -102,34 +99,30 @@
     [self.view addSubview:self.albumGenreAndReleaseDateLabel];
 
 #pragma mark - Control Area
-    // 收藏、信息、前往专辑、分享
+    // 收藏+分享
     NSArray *buttonIcons = @[@"heart.fill", @"square.and.arrow.up"];
     NSArray *buttonTitles = @[@" 收藏", @" 分享"];
     NSArray *buttonSelectors = @[@"favoriteButtonTapped", @"shareButtonTapped"];
 
-    // 按钮宽度、间距和高度
     CGFloat buttonWidth = 478 / 3;
     CGFloat buttonHeight = 144 / 3;
     CGFloat buttonSpacing = 48 / 3;
     CGFloat totalWidth = buttonWidth * buttonIcons.count + buttonSpacing * (buttonIcons.count - 1);
     CGFloat startX = (self.view.bounds.size.width - totalWidth) / 2;
 
-    // 循环创建按钮
+    // 按钮*2
     for (int i = 0; i < buttonIcons.count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        // 设置按钮位置和大小
         button.frame = CGRectMake(startX + i * (buttonWidth + buttonSpacing),
                                   CGRectGetMaxY(self.albumGenreAndReleaseDateLabel.frame) + 10,
                                   buttonWidth,
                                   buttonHeight);
         
-        // 设置按钮样式
         button.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1.00];
         button.layer.cornerRadius = 10;
         button.clipsToBounds = YES;
         
-        // 设置图标
         UIImage *iconImage = [UIImage systemImageNamed:buttonIcons[i]];
         if (iconImage) {
             UIImage *tintedImage = [iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -137,21 +130,17 @@
             [button setTintColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00]];
         }
         
-        // 设置标题
         [button setTitle:buttonTitles[i] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00] forState:UIControlStateNormal];
         button.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         
-        // 添加点击事件
         SEL action = NSSelectorFromString(buttonSelectors[i]);
         [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
         
-        // 添加点击动画效果
         [button addTarget:self action:@selector(buttonTouchDown:) forControlEvents:UIControlEventTouchDown];
         [button addTarget:self action:@selector(buttonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
         [button addTarget:self action:@selector(buttonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
         
-        // 添加到视图
         [self.view addSubview:button];
     }
     
@@ -163,39 +152,54 @@
 
 - (void)shareButtonTapped {
     NSLog(@"分享按钮点击");
+//    AlbumShare *shareVC = [[AlbumShare alloc] init];
+//    shareVC.modalPresentationStyle = UIModalPresentationPageSheet;
+//
+//    // 使用 currentAlbumIndex 获取当前专辑信息
+//    if (self.currentAlbumIndex >= 0 && self.currentAlbumIndex < self.albumDataArray.count) {
+//        shareVC.albumData = self.albumDataArray[self.currentAlbumIndex];
+//    } else {
+//        NSLog(@"无效的当前专辑索引: %@", @(self.currentAlbumIndex));
+//    }
+//
+//    [self presentViewController:shareVC animated:YES completion:nil];
 }
 
+#pragma mark - Touch Animation
 // 按钮点击时变淡的动画
 - (void)buttonTouchDown:(UIButton *)button {
     [UIView animateWithDuration:0.4 animations:^{
-        button.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:0.5]; // 淡化背景
-        [button setTitleColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:0.5] forState:UIControlStateNormal]; // 淡化文字
-        [button setTintColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:0.5]]; // 淡化图标
+        button.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:0.5];
+        [button setTitleColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:0.5] forState:UIControlStateNormal];
+        [button setTintColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:0.5]];
     }];
 }
 
 - (void)buttonTouchUpInside:(UIButton *)button {
     [UIView animateWithDuration:0.4 animations:^{
-        button.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1.00]; // 恢复背景颜色
-        [button setTitleColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00] forState:UIControlStateNormal]; // 恢复文字颜色
-        [button setTintColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00]]; // 恢复图标颜色
-    }];
+        button.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1.00];
+        [button setTitleColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00] forState:UIControlStateNormal];
+        [button setTintColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00]];    }];
 }
 
 - (void)buttonTouchUpOutside:(UIButton *)button {
     [UIView animateWithDuration:0.4 animations:^{
-        button.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1.00]; // 恢复背景颜色
-        [button setTitleColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00] forState:UIControlStateNormal]; // 恢复文字颜色
-        [button setTintColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00]]; // 恢复图标颜色
+        button.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.94 alpha:1.00];
+        [button setTitleColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00] forState:UIControlStateNormal];
+        [button setTintColor:[UIColor colorWithRed:1.00 green:0.00 blue:0.18 alpha:1.00]];
     }];
 }
 
+
+
+#pragma mark - Action Monitor
 // 每次滑动 Cover Flow 时调用一次，获取对应的专辑数据
 - (void)coverFlowView:(CFCoverFlowView *)coverFlowView didScrollPageItemToIndex:(NSInteger)index {
-//    NSLog(@"didScrollPageItemToIndex >>> %@", @(index));
     if (index < 0 || index >= self.albumDataArray.count) {
         return;
     }
+
+//    self.currentAlbumIndex = index;
 
     // 获取对应的专辑数据
     NSDictionary *albumData = self.albumDataArray[index];
@@ -204,16 +208,15 @@
     NSLog(@"位于索引的%@/%@", @(index), @(self.albumDataArray.count - 1));
     self.pageControl.currentPage = index;
 
-    // 淡出
+    // 淡入淡出
     [UIView animateWithDuration:0.2 animations:^{
         self.albumTitleLabel.alpha = 0;
         self.albumArtistLabel.alpha = 0;
         self.albumGenreAndReleaseDateLabel.alpha = 0;
     } completion:^(BOOL finished) {
-        self.albumTitleLabel.text = albumData[@"title"];  // 专辑名称
-        self.albumArtistLabel.text = albumData[@"artist"];  // 作曲家（艺术家）
+        self.albumTitleLabel.text = albumData[@"title"];
+        self.albumArtistLabel.text = albumData[@"artist"];
 
-        // 提取年份
         NSDate *releaseDate = albumData[@"releaseDate"];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"yyyy";
@@ -221,7 +224,6 @@
 
         self.albumGenreAndReleaseDateLabel.text = [NSString stringWithFormat:@"%@ ・ %@年", albumData[@"genre"], year ?: @"未知年份"];
 
-        // 淡入
         [UIView animateWithDuration:0.2 animations:^{
             self.albumTitleLabel.alpha = 1;
             self.albumArtistLabel.alpha = 1;

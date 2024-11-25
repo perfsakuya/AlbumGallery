@@ -5,28 +5,6 @@
 //  Created by 汤骏哲 on 2024/11/17.
 //
 
-//#import "AboutViewController.h"
-//
-//@implementation AboutViewController
-//
-//- (void)viewDidLoad {
-//    [super viewDidLoad];
-//    
-////    self.view.backgroundColor = [UIColor systemGrayColor];
-//    self.title = @"About";
-//
-//    // 添加演示标签
-//    UILabel *label = [[UILabel alloc] initWithFrame:self.view.bounds];
-//    label.text = @"About View";
-//    label.textAlignment = NSTextAlignmentCenter;
-//    label.textColor = [UIColor blueColor];
-//    label.font = [UIFont boldSystemFontOfSize:24];
-//    [self.view addSubview:label];
-//}
-//
-//@end
-
-
 #import "AboutViewController.h"
 
 @implementation AboutViewController
@@ -34,8 +12,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor systemBackgroundColor];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+
     // TODO: 设计图标并展示
     UIImageView *appIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MyProfile"]];
     appIcon.contentMode = UIViewContentModeScaleAspectFit;
