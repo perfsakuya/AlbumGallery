@@ -28,7 +28,7 @@
         [appIcon.heightAnchor constraintEqualToConstant:150]
     ]];
     
-    // 添加应用名称
+    // 应用名
     UILabel *appNameLabel = [[UILabel alloc] init];
     appNameLabel.text = @"Album Gallery";
     appNameLabel.font = [UIFont boldSystemFontOfSize:24];
@@ -40,7 +40,7 @@
         [appNameLabel.topAnchor constraintEqualToAnchor:appIcon.bottomAnchor constant:10]
     ]];
     
-    // 添加版本信息
+    // 版本信息
     UILabel *versionLabel = [[UILabel alloc] init];
     versionLabel.text = @"Demo 0.0.1";
     versionLabel.font = [UIFont systemFontOfSize:16];
@@ -53,7 +53,7 @@
         [versionLabel.topAnchor constraintEqualToAnchor:appNameLabel.bottomAnchor constant:5]
     ]];
     
-    // 添加开发者信息
+    // 开发者信息
     UILabel *developerLabel = [[UILabel alloc] init];
     developerLabel.text = @"Developed by PerfSakuya with ♥.";
     developerLabel.font = [UIFont systemFontOfSize:20];
@@ -66,10 +66,10 @@
         [developerLabel.topAnchor constraintEqualToAnchor:versionLabel.bottomAnchor constant:20]
     ]];
     
-    // 添加联系按钮
+    // contact me
     UIButton *contactButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [contactButton setTitle:@"My Blog" forState:UIControlStateNormal];
-    [contactButton addTarget:self action:@selector(contactUs) forControlEvents:UIControlEventTouchUpInside];
+    [contactButton addTarget:self action:@selector(contactMe) forControlEvents:UIControlEventTouchUpInside];
     contactButton.titleLabel.font = [UIFont systemFontOfSize:20];
     [self.view addSubview:contactButton];
     contactButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -78,7 +78,7 @@
         [contactButton.topAnchor constraintEqualToAnchor:developerLabel.bottomAnchor constant:10]
     ]];
     
-    // 添加版权信息
+    // 版权（真的有必要吗）
     UILabel *copyrightLabel = [[UILabel alloc] init];
     copyrightLabel.text = @"© 2024 PerfSakuya. All Rights Reserved.";
     copyrightLabel.font = [UIFont systemFontOfSize:14];
@@ -93,12 +93,9 @@
     
 }
 
-// 联系按钮的功能
-- (void)contactUs {
-    // 打开邮件或跳转到网站
+- (void)contactMe {
     NSURL *url = [NSURL URLWithString:@"https://blog.perfsky.online/about/"];
     
-    // 检查 URL 是否有效
     if ([[UIApplication sharedApplication] canOpenURL:url]) {
         [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
     } else {

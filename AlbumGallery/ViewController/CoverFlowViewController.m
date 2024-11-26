@@ -52,9 +52,9 @@
     
 #pragma mark - Read & Save Test
     
-    // 从 MusicLibraryManager 获取专辑信息
+    // 从 MusicLibraryManager 获取专辑信息，shuffle一下
     // 现在是从am数据库存储信息并读取到内存中，以后应该只有第一次读取，然后存储在CoreData中，之后直接读取CoreData中的数据
-    [[MusicLibraryManager sharedManager] fetchAlbumsWithCompletion:^(NSArray<NSDictionary *> *albums, NSError *error) {
+    [[MusicLibraryManager sharedManager] fetchAlbumsRandomlyWithCompletion:^(NSArray<NSDictionary *> *albums, NSError *error) {
         if (error) {
             NSLog(@"获取专辑信息失败：%@", error.localizedDescription);
             return;
@@ -355,11 +355,11 @@
                     durationLabel.text = [NSString stringWithFormat:@"%01ld:%02ld", (long)minutes, (long)seconds];
                 } else {
                     nameLabel.text = @"N/A";
-                    durationLabel.text = @"0:00";
+                    durationLabel.text = @"-:--";
                 }
             } else {
                 nameLabel.text = @"N/A";
-                durationLabel.text = @"0:00";
+                durationLabel.text = @"-:--";
             }
         }
 

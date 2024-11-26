@@ -22,7 +22,7 @@
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     
 //    self.view.backgroundColor = [UIColor whiteColor];
-    // 设置 Tab Bar 的标题和图标
+    // 标题和图标
     coverFlowVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Cover Flow"
                                                           image:[UIImage systemImageNamed:@"photo"]
                                                             tag:0];
@@ -36,7 +36,6 @@
                                                        image:[UIImage systemImageNamed:@"info.circle"]
                                                          tag:3];
     
-    // 将子控制器添加到 Tab Bar Controller
     self.viewControllers = @[coverFlowVC, albumListVC, favoritesVC, aboutVC];
 }
 

@@ -24,11 +24,10 @@
         UIWindowScene *windowScene = (UIWindowScene *)scene;
         self.window = [[UIWindow alloc] initWithWindowScene:windowScene];
         
-        // 初始化 Tab Bar Controller
+        // 初始化 TabBarController
         MainTabBarController *tabBarController = [[MainTabBarController alloc] init];
         self.window.rootViewController = tabBarController;
         
-        // 显示窗口
         [self.window makeKeyAndVisible];
     }
 }

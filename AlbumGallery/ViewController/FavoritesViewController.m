@@ -14,7 +14,6 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
 
-    // 添加演示标签
     UILabel *label = [[UILabel alloc] initWithFrame:self.view.bounds];
     label.text = @"Favorites View";
     label.textAlignment = NSTextAlignmentCenter;

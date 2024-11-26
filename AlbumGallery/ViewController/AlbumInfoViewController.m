@@ -10,11 +10,11 @@
 @interface AlbumInfo ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UIButton *closeButton;
+//@property (nonatomic, strong) UIButton *closeButton;
 
 @end
 
-// TODO: 在这里显示专辑封面和标题（模仿am），并且设置保存按钮，或者长按保存
+// TODO: 本来是在这里显示专辑封面和标题（模仿am），并且设置保存按钮，或者长按保存，现在临时起意改成显示当前专辑信息
 @implementation AlbumInfo
 
 - (void)viewDidLoad {
@@ -122,15 +122,15 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)shareImage {
-    if (self.coverImageView.image) {
-        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.coverImageView.image] applicationActivities:nil];
-        activityVC.popoverPresentationController.sourceView = self.view; // iPad 适配
-        [self presentViewController:activityVC animated:YES completion:nil];
-    } else {
-        NSLog(@"封面图片为空，无法分享");
-    }
-}
+//- (void)shareImage {
+//    if (self.coverImageView.image) {
+//        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[self.coverImageView.image] applicationActivities:nil];
+//        activityVC.popoverPresentationController.sourceView = self.view; // iPad 适配
+//        [self presentViewController:activityVC animated:YES completion:nil];
+//    } else {
+//        NSLog(@"封面图片为空，无法分享");
+//    }
+//}
 
 - (void)updateAlbumInfo {
     if (self.albumData) {
@@ -154,8 +154,8 @@
     }
 }
 
-- (void)closeButtonTapped {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+//- (void)closeButtonTapped {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 @end

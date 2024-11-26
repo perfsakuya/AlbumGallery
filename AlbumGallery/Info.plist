@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>我们需要获取访问图片库的权限，以便保存封面图片。ß</string>
+	<string>我们需要获取访问图片库的权限，以便保存封面图片。</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
