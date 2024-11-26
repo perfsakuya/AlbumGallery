@@ -9,12 +9,14 @@
 #import "MusicLibraryManager.h"
 #import "AlbumLocalization.h"
 #import "AlbumShareViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
 @interface CoverFlowViewController () <CFCoverFlowViewDelegate>
 
 @property (nonatomic, strong) NSArray<NSDictionary *> *albumDataArray;
 @property (nonatomic, strong) UILabel *albumTitleLabel;
 @property (nonatomic, strong) UILabel *albumArtistLabel;
 @property (nonatomic, strong) UILabel *albumGenreAndReleaseDateLabel;
+@property (nonatomic, strong) NSArray *currentTrackList;
 //@property (nonatomic, assign) NSInteger currentAlbumIndex;
 @end
 
@@ -144,6 +146,10 @@
         [self.view addSubview:button];
     }
     
+#pragma mark - Song List Area
+    // TODO: 在这里展示歌曲
+    
+    
 }
 
 - (void)favoriteButtonTapped {
@@ -216,6 +222,39 @@
     } completion:^(BOOL finished) {
         self.albumTitleLabel.text = albumData[@"title"];
         self.albumArtistLabel.text = albumData[@"artist"];
+        
+        // TODO: 这里获取专辑的歌曲信息，或许可以用在详细信息按钮，和显示曲目列表中
+        self.currentTrackList = albumData[@"items"];
+        NSLog(@"专辑曲目列表：%@", albumData[@"items"]);
+        NSArray *items = albumData[@"items"];
+        if (![items isKindOfClass:[NSArray class]]) {
+            NSLog(@"items 不是一个数组");
+            return;
+        }
+        for (MPMediaItem *item in items) {
+            if ([item isKindOfClass:[MPMediaItem class]]) {
+                NSString *trackTitle = [item valueForProperty:MPMediaItemPropertyTitle] ?: @"未知曲目";
+                NSString *albumTitle = [item valueForProperty:MPMediaItemPropertyAlbumTitle] ?: @"未知专辑";
+                NSString *artistName = [item valueForProperty:MPMediaItemPropertyArtist] ?: @"未知艺术家";
+                NSString *genre = [item valueForProperty:MPMediaItemPropertyGenre] ?: @"未知流派";
+                NSNumber *duration = [item valueForProperty:MPMediaItemPropertyPlaybackDuration]; // 播放时间以秒为单位
+                NSDate *releaseDate = [item valueForProperty:MPMediaItemPropertyReleaseDate];
+
+                NSLog(@"曲目标题: %@", trackTitle);
+                NSLog(@"专辑名称: %@", albumTitle);
+                NSLog(@"艺术家: %@", artistName);
+                NSLog(@"流派: %@", genre);
+                NSLog(@"播放时长: %.2f 分钟", [duration doubleValue] / 60.0);
+                if (releaseDate) {
+                    NSLog(@"发布日期: %@", releaseDate);
+                } else {
+                    NSLog(@"发布日期: 未知");
+                }
+            } else {
+                NSLog(@"未识别的曲目对象：%@", item);
+            }
+        }
+        
 
         NSDate *releaseDate = albumData[@"releaseDate"];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -232,13 +271,13 @@
     }];
 }
 
-// 选择专辑封面时调用一次
+// 选择专辑封面时调用一次。可以添加长按逻辑
 - (void)coverFlowView:(CFCoverFlowView *)coverFlowView didSelectPageItemAtIndex:(NSInteger)index {
     NSLog(@"didSelectPageItemAtIndex >>> %@", @(index));
 }
 
 - (IBAction)pageControlAction:(UIPageControl *)sender {
-    // 可在此添加分页控件变化时的操作代码
+    // 分页控件变化时调用
 }
 
 - (void)didReceiveMemoryWarning {
