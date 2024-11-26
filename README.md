@@ -1,7 +1,7 @@
 一个简陋的，模仿Cover Flow效果的专辑封面查看器。
 
 <p align="center">
-  <img src="./Images/thumbnail.PNG" alt="图片描述" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); width: 300px;" />
+  <img src="./Images/thumbnail.PNG" alt="预览图" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); width: 300px; border-radius: 10px;" />
 </p>
 
 TODO:
