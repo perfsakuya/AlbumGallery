@@ -1,13 +1,13 @@
 //
-//  AlbumShareViewController.m
+//  AlbumInfoViewController.m
 //  AlbumGallery
 //
 //  Created by 汤骏哲 on 2024/11/25.
 //
 
-#import "AlbumShareViewController.h"
+#import "AlbumInfoViewController.h"
 
-@interface AlbumShare ()
+@interface AlbumInfo ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIButton *closeButton;
@@ -15,7 +15,7 @@
 @end
 
 // TODO: 在这里显示专辑封面和标题（模仿am），并且设置保存按钮，或者长按保存
-@implementation AlbumShare
+@implementation AlbumInfo
 
 - (void)viewDidLoad {
     [super viewDidLoad];

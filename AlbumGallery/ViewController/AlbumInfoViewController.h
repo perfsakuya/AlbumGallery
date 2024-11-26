@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AlbumShare : UIViewController
+@interface AlbumInfo : UIViewController
 @property (nonatomic, strong) NSDictionary *albumData;
 @property (nonatomic, strong) UIImageView *coverImageView; // 封面图片
 @property (nonatomic, strong) UILabel *albumNameLabel;     // 专辑名称
