@@ -7,19 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MediaPlayer/MediaPlayer.h>
-
-@interface MusicLibraryManager : NSObject
-
-+ (instancetype)sharedManager;
-
-// 请求权限
-- (void)requestAuthorizationWithCompletion:(void (^)(BOOL granted, NSError *error))completion;
-
-// 查询库中的所有专辑信息（顺序&shuffle）
-- (void)fetchAlbumsWithCompletion:(void (^)(NSArray<NSDictionary *> *albums, NSError *error))completion;
-- (void)fetchAlbumsRandomlyWithCompletion:(void (^)(NSArray<NSDictionary *> *albums, NSError *error))completion;
-
-@end
+#import "MusicLibraryManager.h"
 
 @implementation MusicLibraryManager
 
@@ -28,6 +16,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedManager = [[self alloc] init];
+        sharedManager.favoriteIndices = [NSMutableSet set]; // 初始化集合
     });
     return sharedManager;
 }

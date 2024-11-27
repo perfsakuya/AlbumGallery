@@ -1,6 +1,6 @@
 //
 //  CoverFlowViewController.h
-//  TestObjC
+//  AlbumGallery
 //
 //  Created by 汤骏哲 on 2024/11/17.
 //
@@ -15,4 +15,8 @@
 
 - (IBAction)pageControlAction:(id)sender;
 
+@end
+
+@protocol CoverFlowViewControllerDelegate <NSObject>
+- (void)coverFlowViewController:(CoverFlowViewController *)controller didUpdateFavoriteIndices:(NSMutableSet<NSNumber *> *)favoriteIndices;
 @end

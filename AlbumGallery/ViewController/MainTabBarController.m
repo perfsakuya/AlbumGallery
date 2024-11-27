@@ -1,6 +1,6 @@
 //
 //  MainTabBarController.m
-//  TestObjC
+//  AlbumGallery
 //
 //  Created by 汤骏哲 on 2024/11/17.
 //  这是应用程序的入口。
@@ -24,7 +24,7 @@
 //    self.view.backgroundColor = [UIColor whiteColor];
     // 标题和图标
     coverFlowVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Cover Flow"
-                                                          image:[UIImage systemImageNamed:@"photo"]
+                                                          image:[UIImage systemImageNamed:@"square.stack"]
                                                             tag:0];
     albumListVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"专辑"
                                                            image:[UIImage systemImageNamed:@"list.bullet"]

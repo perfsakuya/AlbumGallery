@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedManager;
 
+@property (nonatomic, strong) NSMutableSet<NSNumber *> *favoriteIndices;
+
 // 请求权限
 - (void)requestAuthorizationWithCompletion:(void (^)(BOOL granted, NSError *error))completion;
 

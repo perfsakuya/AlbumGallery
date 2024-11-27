@@ -1,11 +1,20 @@
 //
 //  FavoritesViewController.m
-//  TestObjC
+//  AlbumGallery
 //
 //  Created by 汤骏哲 on 2024/11/17.
 //
 
 #import "FavoritesViewController.h"
+#import "CoverFlowViewController.h"
+#import "MusicLibraryManager.h"
+
+@interface FavoritesViewController ()
+
+@property (nonatomic, strong) NSArray<NSDictionary *> *favoriteAlbums;
+@property (nonatomic, strong) UITableView *tableView;
+
+@end
 
 @implementation FavoritesViewController
 
@@ -14,12 +23,20 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
 
-    UILabel *label = [[UILabel alloc] initWithFrame:self.view.bounds];
-    label.text = @"Favorites View";
-    label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor grayColor];
-    label.font = [UIFont boldSystemFontOfSize:24];
-    [self.view addSubview:label];
+    
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"triggered veiwWillAppear");
+    NSMutableSet<NSNumber *> *favorites = [MusicLibraryManager sharedManager].favoriteIndices;
+    
+    // 遍历数据
+    for (NSNumber *index in favorites) {
+        NSLog(@"Favorite album index: %@", index);
+    }
+}
+
+
 
 @end

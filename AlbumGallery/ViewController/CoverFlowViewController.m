@@ -1,6 +1,6 @@
 //
 //  CoverFlowViewController.m
-//  TestObjC
+//  AlbumGallery
 //
 //  Created by 汤骏哲 on 2024/11/17.
 //
@@ -9,7 +9,9 @@
 #import "MusicLibraryManager.h"
 #import "AlbumLocalization.h"
 #import "AlbumInfoViewController.h"
+#import "FavoritesViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
+
 @interface CoverFlowViewController () <CFCoverFlowViewDelegate>
 
 @property (nonatomic, strong) NSArray<NSDictionary *> *albumDataArray;
@@ -29,8 +31,7 @@
 @property (nonatomic, strong) UILabel *songNameLabel3;
 @property (nonatomic, strong) UILabel *songDurationLabel3;
 
-//@property (nonatomic, strong) NSArray *currentTrackList;
-//@property (nonatomic, assign) NSInteger currentAlbumIndex;
+@property (nonatomic, assign) NSInteger currentAlbumIndex;
 @end
 
 @implementation CoverFlowViewController
@@ -50,11 +51,11 @@
     
     coverFlowView.delegate = self;
     
-#pragma mark - Read & Save Test
+#pragma mark - Read & Save
     
     // 从 MusicLibraryManager 获取专辑信息，shuffle一下
     // 现在是从am数据库存储信息并读取到内存中，以后应该只有第一次读取，然后存储在CoreData中，之后直接读取CoreData中的数据
-    [[MusicLibraryManager sharedManager] fetchAlbumsRandomlyWithCompletion:^(NSArray<NSDictionary *> *albums, NSError *error) {
+    [[MusicLibraryManager sharedManager] fetchAlbumsWithCompletion:^(NSArray<NSDictionary *> *albums, NSError *error) {
         if (error) {
             NSLog(@"获取专辑信息失败：%@", error.localizedDescription);
             return;
@@ -240,21 +241,36 @@
 #pragma mark - Bottom Control
 - (void)favoriteButtonTapped {
     NSLog(@"收藏按钮点击");
+    NSInteger currentIndex = self.currentAlbumIndex;
+    
+    if (![MusicLibraryManager sharedManager].favoriteIndices) {
+        [MusicLibraryManager sharedManager].favoriteIndices = [NSMutableSet set];
+    }
+
+    NSNumber *indexNumber = @(currentIndex);
+    
+    // 将收藏的专辑索引添加到favoriteIndices中，并且可以取消收藏
+    if ([[MusicLibraryManager sharedManager].favoriteIndices containsObject:indexNumber]) {
+        [[MusicLibraryManager sharedManager].favoriteIndices removeObject:indexNumber];
+        NSLog(@"取消收藏，favoriteIndices: %@", [MusicLibraryManager sharedManager].favoriteIndices);
+    } else {
+        [[MusicLibraryManager sharedManager].favoriteIndices addObject:indexNumber];
+        NSLog(@"已收藏，favoriteIndices: %@", [MusicLibraryManager sharedManager].favoriteIndices);
+    }    
 }
 
 - (void)infoButtonTapped {
     NSLog(@"信息按钮点击");
-//    AlbumInfo *shareVC = [[AlbumInfo alloc] init];
-//    shareVC.modalPresentationStyle = UIModalPresentationPageSheet;
-//
-//    // 使用 currentAlbumIndex 获取当前专辑信息
-//    if (self.currentAlbumIndex >= 0 && self.currentAlbumIndex < self.albumDataArray.count) {
-//        shareVC.albumData = self.albumDataArray[self.currentAlbumIndex];
-//    } else {
-//        NSLog(@"无效的当前专辑索引: %@", @(self.currentAlbumIndex));
-//    }
-//
-//    [self presentViewController:shareVC animated:YES completion:nil];
+    AlbumInfo *shareVC = [[AlbumInfo alloc] init];
+    shareVC.modalPresentationStyle = UIModalPresentationPageSheet;
+
+    if (self.currentAlbumIndex >= 0 && self.currentAlbumIndex < self.albumDataArray.count) {
+        shareVC.albumData = self.albumDataArray[self.currentAlbumIndex];
+    } else {
+        NSLog(@"当前专辑索引无效: %@", @(self.currentAlbumIndex));
+    }
+
+    [self presentViewController:shareVC animated:YES completion:nil];
 }
 
 
@@ -293,8 +309,7 @@
         return;
     }
 
-//    self.currentAlbumIndex = index;
-
+    self.currentAlbumIndex = index;
     NSDictionary *albumData = self.albumDataArray[index];
     
     // 测试
