@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import "MusicLibraryManager.h"
+#import "AppDelegate.h"
 
 @implementation MusicLibraryManager
 
@@ -16,7 +17,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedManager = [[self alloc] init];
-        sharedManager.favoriteIndices = [NSMutableSet set]; // 初始化集合
+//        sharedManager.favoriteIndices = [NSMutableSet set]; // 初始化集合
+        [sharedManager loadFavoriteIndicesFromCoreData]; // 加载收藏数据
+
     });
     return sharedManager;
 }
@@ -36,6 +39,7 @@
     }];
 }
 
+#pragma mark - Fetching Albums
 - (void)fetchAlbumsWithCompletion:(void (^)(NSArray<NSDictionary *> *albums, NSError *error))completion {
     if ([MPMediaLibrary authorizationStatus] != MPMediaLibraryAuthorizationStatusAuthorized) {
         NSError *error = [NSError errorWithDomain:@"MusicLibraryManagerError"
@@ -134,6 +138,53 @@
             if (completion) completion([albumArray copy], nil);
         });
     });
+}
+
+#pragma mark - Save Favorite Indices
+- (void)saveFavoriteIndicesToCoreData {
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
+
+    // 删除旧数据
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteData"];
+    NSArray *existingEntries = [context executeFetchRequest:fetchRequest error:nil];
+    for (NSManagedObject *entry in existingEntries) {
+        [context deleteObject:entry];
+    }
+
+    // 保存新的数据
+    NSManagedObject *favoriteData = [NSEntityDescription insertNewObjectForEntityForName:@"FavoriteData" inManagedObjectContext:context];
+    [favoriteData setValue:self.favoriteIndices forKey:@"indices"]; // 自动序列化为 Transformable 类型
+
+    // 保存上下文
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"Failed to save favoriteIndices: %@", error.localizedDescription);
+    } else {
+        NSLog(@"Successfully saved favoriteIndices to Core Data");
+    }
+}
+
+- (void)loadFavoriteIndicesFromCoreData {
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
+
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteData"];
+    NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+
+    if (results.count > 0) {
+        NSManagedObject *favoriteData = results.firstObject;
+        NSSet *storedIndices = [favoriteData valueForKey:@"indices"];
+        if (storedIndices) {
+            self.favoriteIndices = [storedIndices mutableCopy]; // 转为可变集合
+        } else {
+            self.favoriteIndices = [NSMutableSet set];
+        }
+    } else {
+        self.favoriteIndices = [NSMutableSet set];
+    }
+
+    NSLog(@"Loaded favoriteIndices from Core Data: %@", self.favoriteIndices);
 }
 
 @end

@@ -12,7 +12,7 @@
 @interface AlbumListViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray<NSDictionary *> *albums;
-@property (nonatomic, strong) UILabel *titleLabel;
+//@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 
@@ -24,14 +24,8 @@
 
 #pragma mark -  Album List
     
-    // 在collectionview上方添加一个标题label
-    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, self.view.bounds.size.width - 40, 30)];
-    self.titleLabel.text = @"收藏";
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:24];
-    [self.view addSubview:self.titleLabel];
-    
-    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 50);
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     layout.minimumInteritemSpacing = -10; //magic number
     layout.minimumLineSpacing = -10;
@@ -42,6 +36,10 @@
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.collectionView registerClass:[AlbumCellView class] forCellWithReuseIdentifier:@"AlbumCell"];
 
+    
+    [self.collectionView registerClass:[AlbumCellView class] forCellWithReuseIdentifier:@"AlbumCell"];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
+    
     CGRect collectionViewFrame = self.collectionView.frame;
     collectionViewFrame.origin.y += 50;
     self.collectionView.frame = collectionViewFrame;
@@ -52,7 +50,7 @@
     
 }
 
-#pragma mark - UICollectionViewDataSource
+#pragma mark - Collection View Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.albums.count;
@@ -76,15 +74,13 @@
     return cell;
 }
 
-#pragma mark - UICollectionViewDelegateFlowLayout
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat width = self.view.bounds.size.width / 2;
     CGFloat height = width + 40; // 封面+标签
     return CGSizeMake(width, height);
 }
 
-#pragma mark - Load & Update
+#pragma mark - Initialize Album Data Source
 
 - (void)loadAlbums {
     [[MusicLibraryManager sharedManager] fetchAlbumsWithCompletion:^(NSArray<NSDictionary *> *albums, NSError *error) {
@@ -97,6 +93,30 @@
     }];
 }
 
+#pragma mark - Collection View Header
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        headerView.backgroundColor = [UIColor whiteColor];
 
+        // 添加标题标签
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:headerView.bounds];
+        titleLabel.text = @"专辑列表";
+        titleLabel.textAlignment = NSTextAlignmentLeft;
+        CGRect labelFrame = titleLabel.frame;
+        labelFrame.origin.x += 13; // 空出部分像素
+        titleLabel.frame = labelFrame;        titleLabel.font = [UIFont boldSystemFontOfSize:30];
+        titleLabel.textColor = [UIColor blackColor];
+        titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [headerView addSubview:titleLabel];
+
+        return headerView;
+    }
+    return nil;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(self.view.bounds.size.width, 50);
+}
 
 @end

@@ -180,15 +180,36 @@
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     NSString *message = error ? @"保存失败" : @"保存成功";
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [self showToast:message];
+}
+
+- (void)showToast:(NSString *)message {
+    // pop-up 消息
+    CGFloat toastWidth = self.view.frame.size.width / 4 + 20;
+    UILabel *toastLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, toastWidth, 40)];
+    toastLabel.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 120);
+    toastLabel.textAlignment = NSTextAlignmentCenter;
+    toastLabel.text = message;
+    toastLabel.textColor = [UIColor colorWithRed: 0.98 green: 0.14 blue: 0.23 alpha: 1.00];
+    toastLabel.backgroundColor = [UIColor whiteColor];
+    toastLabel.alpha = 0.0;
+    toastLabel.layer.cornerRadius = 10;
+    toastLabel.clipsToBounds = YES;
     
-    [self presentViewController:alert animated:YES completion:nil];
+    toastLabel.layer.borderWidth = 0.34;
+    toastLabel.layer.borderColor = [UIColor grayColor].CGColor;
+
+    [self.view addSubview:toastLabel];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [alert dismissViewControllerAnimated:YES completion:nil];
-    });
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        toastLabel.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 delay:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            toastLabel.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [toastLabel removeFromSuperview];
+        }];
+    }];
 }
 
 @end

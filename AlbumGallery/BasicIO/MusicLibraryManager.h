@@ -11,9 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MusicLibraryManager : NSObject
 
-+ (instancetype)sharedManager;
-
 @property (nonatomic, strong) NSMutableSet<NSNumber *> *favoriteIndices;
+
++ (instancetype)sharedManager;
+- (void)saveFavoriteIndicesToCoreData; // 添加这行
+- (void)loadFavoriteIndicesFromCoreData; // 添加这行
 
 // 请求权限
 - (void)requestAuthorizationWithCompletion:(void (^)(BOOL granted, NSError *error))completion;
@@ -21,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 // 获取专辑信息（顺序&shuffle）
 - (void)fetchAlbumsWithCompletion:(void (^)(NSArray<NSDictionary *> *albums, NSError *error))completion;
 - (void)fetchAlbumsRandomlyWithCompletion:(void (^)(NSArray<NSDictionary *> *albums, NSError *error))completion;
+
+
 
 @end
 

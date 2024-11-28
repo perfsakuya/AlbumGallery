@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    [[MusicLibraryManager sharedManager] loadFavoriteIndicesFromCoreData];
 #pragma mark - Cover Flow Area
     
     CFCoverFlowView *coverFlowView = [[CFCoverFlowView alloc] initWithFrame:CGRectMake(0, 75, self.view.bounds.size.width, self.view.bounds.size.height / 3)];
@@ -53,7 +53,6 @@
     
 #pragma mark - Read & Save
     
-    // 从 MusicLibraryManager 获取专辑信息，shuffle一下
     // 现在是从am数据库存储信息并读取到内存中，以后应该只有第一次读取，然后存储在CoreData中，之后直接读取CoreData中的数据
     [[MusicLibraryManager sharedManager] fetchAlbumsWithCompletion:^(NSArray<NSDictionary *> *albums, NSError *error) {
         if (error) {
@@ -253,11 +252,19 @@
     if ([[MusicLibraryManager sharedManager].favoriteIndices containsObject:indexNumber]) {
         [[MusicLibraryManager sharedManager].favoriteIndices removeObject:indexNumber];
         NSLog(@"取消收藏当前专辑，favoriteIndices: %@", [MusicLibraryManager sharedManager].favoriteIndices);
+        
+        [self showToast:@"已取消收藏"];
     } else {
         [[MusicLibraryManager sharedManager].favoriteIndices addObject:indexNumber];
         NSLog(@"收藏当前专辑，favoriteIndices: %@", [MusicLibraryManager sharedManager].favoriteIndices);
-    }    
+        [self showToast:@"已收藏"];
+
+    }
+    // 保存结果
+    [[MusicLibraryManager sharedManager] saveFavoriteIndicesToCoreData];
 }
+
+
 
 - (void)infoButtonTapped {
     NSLog(@"信息按钮点击");
@@ -392,6 +399,35 @@
             self.songNameLabel3.alpha = 1;
             self.songDurationLabel3.alpha = 1;
             
+        }];
+    }];
+}
+
+- (void)showToast:(NSString *)message {
+    // pop-up 消息
+    CGFloat toastWidth = self.view.frame.size.width / 4 + 20;
+    UILabel *toastLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, toastWidth, 40)];
+    toastLabel.center = CGPointMake(self.view.center.x, self.view.frame.size.height - 120);
+    toastLabel.textAlignment = NSTextAlignmentCenter;
+    toastLabel.text = message;
+    toastLabel.textColor = [UIColor colorWithRed: 0.98 green: 0.14 blue: 0.23 alpha: 1.00];
+    toastLabel.backgroundColor = [UIColor whiteColor];
+    toastLabel.alpha = 0.0;
+    toastLabel.layer.cornerRadius = 10;
+    toastLabel.clipsToBounds = YES;
+    
+    toastLabel.layer.borderWidth = 0.34;
+    toastLabel.layer.borderColor = [UIColor grayColor].CGColor;
+
+    [self.view addSubview:toastLabel];
+    
+    [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        toastLabel.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.3 delay:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            toastLabel.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [toastLabel removeFromSuperview];
         }];
     }];
 }
