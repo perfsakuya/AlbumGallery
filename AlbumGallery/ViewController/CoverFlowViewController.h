@@ -18,5 +18,7 @@
 @end
 
 @protocol CoverFlowViewControllerDelegate <NSObject>
+
 - (void)coverFlowViewController:(CoverFlowViewController *)controller didUpdateFavoriteIndices:(NSMutableSet<NSNumber *> *)favoriteIndices;
+
 @end
