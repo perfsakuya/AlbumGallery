@@ -14,8 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableSet<NSNumber *> *favoriteIndices;
 
 + (instancetype)sharedManager;
-- (void)saveFavoriteIndicesToCoreData; // 添加这行
-- (void)loadFavoriteIndicesFromCoreData; // 添加这行
+- (void)saveFavoriteIndicesToCoreData;
+- (void)loadFavoriteIndicesFromCoreData;
 
 // 请求权限
 - (void)requestAuthorizationWithCompletion:(void (^)(BOOL granted, NSError *error))completion;
