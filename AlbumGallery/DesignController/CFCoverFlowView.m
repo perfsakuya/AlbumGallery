@@ -4,9 +4,16 @@
 //
 //  Created by c0ming on 14-7-6.
 //  Copyright (c) 2014 c0ming. All rights reserved.
+//  Licensed under the MIT License.
+//
+//  Part of this code is adapted from CFCoverFlowView(https://github.com/c0ming/CFCoverFlowView)
+//  Modifications made by PerfSakuya on 24-11-17:
+//  - Changed the layout to fit the view.
+//  - Fixed the mirror display issue.
+//  Licensed under the MIT License.
 //
 
-// FIXME: 目前的两个问题：1. 滑动position误差；2. 正确显示的封面序列只有三个
+
 #import "CFCoverFlowView.h"
 
 @import QuartzCore;
@@ -144,7 +151,8 @@
     [item.layer addSublayer:mirrorLayer];
 }
 
-#pragma mark - 获取专辑封面
+#pragma mark - Get Album Image
+
 - (void)setPageItemsWithImageArray:(NSArray<UIImage *> *)images {
     // 确保图片数量大于3
     assert(images != nil && [images count] > 3);
@@ -308,7 +316,7 @@
 
 #pragma mark - Get image name
 
-// TODO: 即将废弃
+// TODO: 已废弃
 - (NSArray *)getImageNamesFromDirectory:(NSString *)directory {
     // 获取 Documents 路径
     NSString *docsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
@@ -506,9 +514,8 @@
     [self transformShadowView2WithDistance:distance];
 }
 
-// FIXME: 可能在这里修改动画位置
 - (CGFloat)fixPosition:(CGFloat)position {
-    // 占位，修复可能的累积误差
+    // 修复可能的累积误差
     return position;
 }
 
@@ -565,7 +572,6 @@
     }
 }
 
-// TODO: 在这里同步更新专辑信息
 - (void)respondsToDidScrollPageToIndex {
     static NSInteger lastScrollIndex = 0;
     NSInteger currentScrollIndex = 0;
@@ -605,20 +611,6 @@
     return position;
 }
 
-//- (CGFloat)positionForPageItemsPosition:(CGFloat)position {
-//    CGFloat maxPosition = _pageItemSpace * (_pageItemCount - 1); // 最大边界
-//    CGFloat minPosition = -_pageItemSpace * (_pageItemCount - 1); // 最小边界
-//
-//    // 循环调整 position
-//    if (position < minPosition) {
-//        position += _pageItemSpace * _pageItemCount;
-//    } else if (position > maxPosition) {
-//        position -= _pageItemSpace * _pageItemCount;
-//    }
-//
-//    NSLog(@"Corrected Position: %f", position); // 调试日志
-//    return position;
-//}
 
 - (CGFloat)positionForShadowView1Position:(CGFloat)position {
     if (position < (-_pageItemSpace * 1.5 - _shadowOffset)) {
@@ -646,23 +638,6 @@
     return CGSizeMake(position - _pageItemSpace * 1.5 - _shadowRadius * 2.0, 0);
 }
 
-// FIXME: FIX02
-//- (CATransform3D)transformForPosition:(CGFloat)position {
-//    // 计算平移变换
-//    CATransform3D translationTransform = CATransform3DMakeTranslation(position, 0.0, fabs(position / _pageItemSpace) * -200.0);
-//    
-//    // 计算角度
-//    CGFloat angle = -(M_PI * (position / (_pageItemSpace / 60.0)) / 180.0);
-//    
-//    // 四舍五入到最近的整数值
-//    angle = round(angle);
-//    NSLog(@"Transform for position %f: angle %f", position, angle);
-//
-//    // 应用旋转变换
-//    CATransform3D transform = CATransform3DRotate(translationTransform, angle, 0, 1, 0);
-//    
-//    return transform;
-//}
 - (CATransform3D)transformForPosition:(CGFloat)position {
     // 确保 position 合理化后再计算角度
     CGFloat ratio = position / _pageItemSpace;

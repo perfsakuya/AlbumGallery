@@ -22,7 +22,6 @@
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     
 //    self.view.backgroundColor = [UIColor whiteColor];
-    // 标题和图标
     coverFlowVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Cover Flow"
                                                           image:[UIImage systemImageNamed:@"square.stack"]
                                                             tag:0];

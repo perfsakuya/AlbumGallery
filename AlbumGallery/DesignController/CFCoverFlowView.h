@@ -1,9 +1,15 @@
 //
-//  CFCoverFlowView.h
+//  CFCoverFlowView.m
 //  CFCoverFlowViewDemo
 //
 //  Created by c0ming on 14-7-6.
 //  Copyright (c) 2014 c0ming. All rights reserved.
+//  Licensed under the MIT License.
+//
+//  Part of this code is adapted from CFCoverFlowView(https://github.com/c0ming/CFCoverFlowView)
+//  Modifications made by PerfSakuya on 24-11-17:
+//  - Nothing but some additional declarations.
+//  Licensed under the MIT License.
 //
 
 #import <UIKit/UIKit.h>

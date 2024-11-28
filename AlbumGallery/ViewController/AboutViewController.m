@@ -14,7 +14,6 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
 
-    // TODO: 设计图标并展示
     UIImageView *appIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MyProfile"]];
     appIcon.contentMode = UIViewContentModeScaleAspectFit;
     appIcon.layer.cornerRadius = 20;
@@ -42,7 +41,7 @@
     
     // 版本信息
     UILabel *versionLabel = [[UILabel alloc] init];
-    versionLabel.text = @"Demo 0.0.1";
+    versionLabel.text = @"1.0.0";
     versionLabel.font = [UIFont systemFontOfSize:16];
     versionLabel.textColor = [UIColor colorWithRed: 0.54 green: 0.54 blue: 0.56 alpha: 1.00];
     versionLabel.textAlignment = NSTextAlignmentCenter;
