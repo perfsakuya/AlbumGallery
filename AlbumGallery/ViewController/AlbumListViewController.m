@@ -12,7 +12,7 @@
 @interface AlbumListViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSArray<NSDictionary *> *albums;
-
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 
@@ -23,6 +23,14 @@
     self.view.backgroundColor = [UIColor whiteColor];
 
 #pragma mark -  Album List
+    
+    // 在collectionview上方添加一个标题label
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, self.view.bounds.size.width - 40, 30)];
+    self.titleLabel.text = @"收藏";
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:24];
+    [self.view addSubview:self.titleLabel];
+    
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     layout.minimumInteritemSpacing = -10; //magic number

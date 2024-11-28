@@ -252,10 +252,10 @@
     // 将收藏的专辑索引添加到favoriteIndices中，并且可以取消收藏
     if ([[MusicLibraryManager sharedManager].favoriteIndices containsObject:indexNumber]) {
         [[MusicLibraryManager sharedManager].favoriteIndices removeObject:indexNumber];
-        NSLog(@"取消收藏，favoriteIndices: %@", [MusicLibraryManager sharedManager].favoriteIndices);
+        NSLog(@"取消收藏当前专辑，favoriteIndices: %@", [MusicLibraryManager sharedManager].favoriteIndices);
     } else {
         [[MusicLibraryManager sharedManager].favoriteIndices addObject:indexNumber];
-        NSLog(@"已收藏，favoriteIndices: %@", [MusicLibraryManager sharedManager].favoriteIndices);
+        NSLog(@"收藏当前专辑，favoriteIndices: %@", [MusicLibraryManager sharedManager].favoriteIndices);
     }    
 }
 
