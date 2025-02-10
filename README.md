@@ -1,4 +1,4 @@
-一个简陋的，模仿Cover Flow效果的专辑封面查看器。
+一个简单的，模仿Cover Flow效果的专辑封面查看器。支持收藏和显示详细信息等功能。
 
 <p align="center">
   <img src="./Images/thumbnail.PNG" alt="预览图" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); width: 300px; border-radius: 10px;" />
